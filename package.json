@@ -1,0 +1,70 @@
+{
+  "name": "react-use-hotkeys",
+  "version": "1.0.0",
+  "description": "React hook to handle keyboard shortcuts",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "files": [
+    "lib/",
+    "esm/"
+  ],
+  "scripts": {
+    "start": "yarn storybook",
+    "storybook": "start-storybook -p 8000",
+    "test": "jest src/__tests__/ --testPathIgnorePatterns src/__tests__/helpers",
+    "lint": "tslint 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "build:cjs": "tsc",
+    "build:esm": "tsc -m esNext --outDir esm",
+    "build": "yarn build:cjs && yarn build:esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reecelucas/react-use-hotkeys.git"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "react-hooks",
+    "hotkeys",
+    "keyboard",
+    "shortcut",
+    "react-use",
+    "use"
+  ],
+  "author": "Reece Lucas <reecelucas@sky.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reecelucas/react-use-hotkeys/issues"
+  },
+  "homepage": "https://github.com/reecelucas/react-use-hotkeys#readme",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@storybook/addon-knobs": "^5.0.6",
+    "@storybook/addons": "^5.0.6",
+    "@storybook/react": "^5.0.6",
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.12",
+    "@types/storybook__addon-knobs": "^4.0.5",
+    "@types/storybook__react": "^4.0.1",
+    "babel-jest": "^24.7.1",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.7.1",
+    "prettier": "^1.16.4",
+    "react-testing-library": "^6.0.4",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "shim-keyboard-event-key": "^1.0.3"
+  }
+}
