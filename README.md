@@ -36,12 +36,12 @@ useHotkeys('w s d', () => {
 The following patterns are **not** supported (yet).
 
 ```jsx
-// Modifier keys in key sequences
+// Modifier keys in sequences
 useHotkeys('Control i d', () => {
   console.log("I won't run!");
 });
 
-// Modifier combinations in key sequences
+// Modifier combinations in sequences
 useHotkeys('Control+z i d', () => {
   console.log("I won't run!");
 });
