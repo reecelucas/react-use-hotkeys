@@ -1,6 +1,6 @@
 {
   "name": "@reecelucas/react-use-hotkeys",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "React hook to create keyboard shortcuts",
   "main": "lib/index.js",
   "module": "esm/index.js",
