@@ -1,7 +1,7 @@
 {
-  "name": "react-use-hotkeys",
+  "name": "@reecelucas/react-use-hotkeys",
   "version": "1.0.0",
-  "description": "React hook to handle keyboard shortcuts",
+  "description": "React hook to create keyboard shortcuts",
   "main": "lib/index.js",
   "module": "esm/index.js",
   "files": [
@@ -16,7 +16,8 @@
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "build:cjs": "tsc",
     "build:esm": "tsc -m esNext --outDir esm",
-    "build": "yarn build:cjs && yarn build:esm"
+    "build": "yarn build:cjs && yarn build:esm",
+    "prepublishOnly": "yarn lint && yarn test && yarn build"
   },
   "repository": {
     "type": "git",

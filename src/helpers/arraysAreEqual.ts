@@ -1,6 +1,6 @@
 /**
- * Checks if two arrays contain the same items.
- * Note: items must be in the same order.
+ * Check if two arrays contain the same items.
+ * Items *must* be in the same order.
  *
  *   arraysEqual([1, 2, 3], [3, 2, 1]) // false
  *   arraysEqual([1, 2, 3], [1, 2, 3]) // true

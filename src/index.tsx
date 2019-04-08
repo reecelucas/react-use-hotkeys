@@ -1,20 +1,14 @@
 import { useEffect, useMemo } from 'react';
-import arraysEqual from './helpers/arraysEqual';
-import arraysEqualByIndex from './helpers/arraysEqualByIndex';
+import arraysAreEqual from './helpers/arraysAreEqual';
 import getActiveModifierKeys from './helpers/getActiveModifierKeys';
 import getHotkeysArray from './helpers/getHotkeysArray';
+import isSameSet from './helpers/isSameSet';
 import mapModifierKeys from './helpers/mapModifierKeys';
 import modifierKeyPressed from './helpers/modifierKeyPressed';
 import tail from './helpers/tail';
 import takeUntilLast from './helpers/takeUntilLast';
 
 import 'shim-keyboard-event-key';
-
-/**
- * TODO:
- * 1. Allow multiple hotkey combinations (['Meta+Shift+z', 'Control+Shift+z'])
- * 2. Look into https://github.com/mpeyper/react-hooks-testing-library
- */
 
 const KEY_SEQUENCE_TIMEOUT = 1000;
 
@@ -45,7 +39,7 @@ const useHotkeys = (
 
       keySequence.push(event.key.toLowerCase());
 
-      if (arraysEqualByIndex(keySequence, keys)) {
+      if (arraysAreEqual(keySequence, keys)) {
         resetKeySequence();
         callback(event);
       }
@@ -55,7 +49,7 @@ const useHotkeys = (
       const actionKey: string = tail(keys);
       const modKeys = mapModifierKeys(takeUntilLast(keys));
       const activeModKeys = getActiveModifierKeys(event);
-      const allModKeysPressed = arraysEqual(modKeys, activeModKeys);
+      const allModKeysPressed = isSameSet(modKeys, activeModKeys);
 
       if (allModKeysPressed && event.key.toLowerCase() === actionKey) {
         callback(event);
