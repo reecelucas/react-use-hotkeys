@@ -10,7 +10,7 @@ npm install react-use-hotkeys --save
 
 ## Example Usage
 
-All hotkey combinations must use valid `KeyBoardEvent` `"key"` values. A full list can be found here: <https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values> and Wes Bos has created a great interactive lookup: <https://keycode.info/>.
+All hotkey combinations must use valid `KeyBoardEvent` `"key"` values. A full list can be found on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) and Wes Bos has created a [great interactive lookup](https://keycode.info/).
 
 ```jsx
 // Single keys
@@ -60,7 +60,7 @@ useHotkeys(hotkeys: string, callback: (event: KeyboardEvent) => void);
 
 ## Tests
 
-All tests are run with [Jest](https://jestjs.io/) and [react-testing-library](https://github.com/kentcdodds/react-testing-library).
+Tests use [Jest](https://jestjs.io/) and [react-testing-library](https://github.com/kentcdodds/react-testing-library).
 
 ```Bash
 git clone git@github.com:reecelucas/react-use-hotkeys.git
