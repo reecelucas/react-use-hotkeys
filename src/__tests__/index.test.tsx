@@ -359,15 +359,3 @@ describe('useHotkeys: key sequences', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });
-
-// describe('useHotkeys: multiple combinations', () => {
-//   test('["z", "i"] should fire when either z or i is pressed', () => {
-//     const spy = jest.fn();
-
-//     setup(['z', 'i'], spy);
-//     fireKeydownEvent('z');
-//     expect(spy).toHaveBeenCalledTimes(1);
-//     fireKeydownEvent('i');
-//     expect(spy).toHaveBeenCalledTimes(2);
-//   });
-// });
