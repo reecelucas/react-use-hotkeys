@@ -116,7 +116,7 @@ describe('useHotkeys: modifier keys', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  test('whitespace between hotkeys is ignored', () => {
+  test('whitespace between modifier combinations is ignored', () => {
     const spy1 = jest.fn();
     const spy2 = jest.fn();
     const spy3 = jest.fn();
@@ -237,7 +237,7 @@ describe('useHotkeys: key sequences', () => {
     expect(spy3).toHaveBeenCalledTimes(0);
   });
 
-  test('key sequences should be space-separated', () => {
+  test('sequences should be space-separated', () => {
     const spy1 = jest.fn();
     const spy2 = jest.fn();
 
@@ -252,7 +252,7 @@ describe('useHotkeys: key sequences', () => {
     expect(spy2).toHaveBeenCalledTimes(1);
   });
 
-  test('extra whitespace in a key sequence should be ignored', () => {
+  test('extra whitespace in a sequence should be ignored', () => {
     const spy1 = jest.fn();
     const spy2 = jest.fn();
 
