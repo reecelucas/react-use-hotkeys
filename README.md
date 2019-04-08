@@ -2,6 +2,14 @@
 
 React hook for creating keyboard shortcuts.
 
+## Installation
+
+```Bash
+npm install @reecelucas/react-use-hotkeys
+```
+
+This package has a single dependency, a tiny shim called [`shim-keyboard-event-key`](https://www.npmjs.com/package/shim-keyboard-event-key) that normalises the non-standard `KeyBoardEvent.key` [values](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8860571/) implemented in Edge and IE.
+
 ## Example Usage
 
 All hotkey combinations must use valid `KeyBoardEvent` `"key"` values. A full list can be found on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) and Wes Bos has created a great [interactive lookup](https://keycode.info/).
