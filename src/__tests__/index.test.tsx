@@ -359,3 +359,17 @@ describe('useHotkeys: key sequences', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('useHotkeys: escape hatch', () => {
+  test('* should fire for all keys', () => {
+    const spy = jest.fn();
+
+    setup('*', spy);
+    fireKeydownEvent('z');
+    fireKeydownEvent(' ');
+    fireKeydownEvent(';');
+    fireKeydownEvent('', { ctrlKey: true });
+    fireKeydownEvent('z', { metaKey: true });
+    expect(spy).toHaveBeenCalledTimes(5);
+  });
+});

@@ -11,6 +11,7 @@ import takeUntilLast from './helpers/takeUntilLast';
 import 'shim-keyboard-event-key';
 
 const KEY_SEQUENCE_TIMEOUT = 1000;
+const ESCAPE_HATCH = '*';
 
 const useHotkeys = (
   hotkeys: string,
@@ -57,6 +58,15 @@ const useHotkeys = (
     };
 
     const onKeydown = (event: KeyboardEvent) => {
+      if (hotkeys === ESCAPE_HATCH) {
+        /**
+         * Provide escape hatch should the user want to perform
+         * some custom logic not supported by the API.
+         */
+        callback(event);
+        return;
+      }
+
       // Handle modifier key combos
       if (modifierKeyPressed(event)) {
         handleModifierCombo(event, hotkeysArray);
