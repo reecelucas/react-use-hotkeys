@@ -2,6 +2,10 @@
 
 React hook for creating keyboard shortcuts.
 
+[![Coverage Status](https://coveralls.io/repos/github/reecelucas/react-use-hotkeys/badge.svg?branch=master)](https://coveralls.io/github/reecelucas/react-use-hotkeys?branch=master)
+![npm (scoped)](https://img.shields.io/npm/v/@reecelucas/react-use-hotkeys.svg)
+![GitHub](https://img.shields.io/github/license/reecelucas/react-use-hotkeys.svg)
+
 ## Installation
 
 ```Bash
