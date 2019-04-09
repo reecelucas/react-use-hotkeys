@@ -4,6 +4,7 @@ React hook for creating keyboard shortcuts.
 
 [![Coverage Status](https://coveralls.io/repos/github/reecelucas/react-use-hotkeys/badge.svg?branch=master)](https://coveralls.io/github/reecelucas/react-use-hotkeys?branch=master)
 [![Build Status](https://travis-ci.org/reecelucas/react-use-hotkeys.svg?branch=master)](https://travis-ci.org/reecelucas/react-use-hotkeys)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@reecelucas/react-use-hotkeys.svg)
 ![npm (scoped)](https://img.shields.io/npm/v/@reecelucas/react-use-hotkeys.svg)
 ![GitHub](https://img.shields.io/github/license/reecelucas/react-use-hotkeys.svg)
 
