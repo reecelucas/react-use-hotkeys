@@ -12,7 +12,7 @@
     "start": "yarn storybook",
     "storybook": "start-storybook -p 8000",
     "test": "jest src/__tests__/ --testPathIgnorePatterns src/__tests__/helpers",
-    "test:cover": "yarn test --coverage",
+    "test:cover": "yarn test --coverage --collectCoverageFrom='src/index.ts'",
     "coveralls": "cat coverage/lcov.info | node node_modules/.bin/coveralls",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
