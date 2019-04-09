@@ -14,7 +14,8 @@ const Basic = ({ hotkey }: { hotkey: string }) => {
     }
   }, [hotkey]);
 
-  useHotkeys(hotkey, () => {
+  useHotkeys(hotkey, event => {
+    event.preventDefault();
     setKeyPressed(true);
   });
 
@@ -29,4 +30,5 @@ const Basic = ({ hotkey }: { hotkey: string }) => {
 
 storiesOf('useHotkeys', module)
   .addDecorator(withKnobs)
-  .add('hotkeys', () => <Basic hotkey={text('Hotkeys', 'Escape')} />);
+  .add('Core API', () => <Basic hotkey={text('Hotkeys', 'Escape')} />)
+  .add('Escape hatch', () => <Basic hotkey={'*'} />);

@@ -41,7 +41,7 @@ useHotkeys('w s d', () => {
 });
 ```
 
-The following patterns are **not** supported (yet).
+The following patterns are **not** supported (yet):
 
 ```jsx
 // Modifier keys in sequences
@@ -57,6 +57,18 @@ useHotkeys('Control+z i d', () => {
 // Multiple combinations mapped to the same callback
 useHotkeys(['Control+z', 'Meta+z'], () => {
   console.log("I won't run!");
+});
+```
+
+If you find a use case where the API is too restrictive you can use the escape hatch to perform whatever custom logic you need:
+
+```jsx
+useHotkeys('*', event => {
+  console.log("I will run on every keydown");
+
+  if (customKeyLogic(event)) {
+    console.log("some action");
+  }
 });
 ```
 
