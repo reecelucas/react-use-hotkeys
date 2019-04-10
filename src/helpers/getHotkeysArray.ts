@@ -11,9 +11,12 @@ export default (hotkeys: string): string[] => {
     return hkeys.replace(/\s+/g, '').split('+');
   }
 
-  // We're dealing with a key sequence
-  return hkeys
-    .replace(/\s+/g, ' ')
-    .trim()
-    .split(' ');
+  /**
+   * We're dealing with a key sequence, so split on spaces.
+   * If the whitespace character is within quotation marks (" " or ' ')
+   * it signifies a space key and not a delimeter.
+   */
+  return [...(hkeys.match(/[^\s"']+|"([^"]*)"|'([^']*)'/g) || [])].map(key =>
+    key.replace(/("|').*?("|')/, ' ')
+  );
 };

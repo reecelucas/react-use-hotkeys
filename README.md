@@ -39,6 +39,11 @@ useHotkeys('Meta+Shift+z', () => {
 useHotkeys('w s d', () => {
   console.log('some action');
 });
+
+useHotkeys('w " " d', () => {
+  // space key in sequence (`w ' ' d` also works)
+  console.log('some action');
+});
 ```
 
 The following patterns are **not** supported (yet):

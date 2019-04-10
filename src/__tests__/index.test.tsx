@@ -65,6 +65,14 @@ describe('useHotkeys: basic', () => {
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
+  test('space key should fire when pressing space', () => {
+    const spy = jest.fn();
+
+    setup(' ', spy);
+    fireKeydownEvent(' ');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
   test('hotkeys should not be case sensitive', () => {
     const spy1 = jest.fn();
     const spy2 = jest.fn();
@@ -255,16 +263,46 @@ describe('useHotkeys: key sequences', () => {
   test('extra whitespace in a sequence should be ignored', () => {
     const spy1 = jest.fn();
     const spy2 = jest.fn();
+    const spy3 = jest.fn();
 
-    setup(' g  i', spy1);
+    setup('g  i  ', spy1);
     fireKeydownEvent('g');
     fireKeydownEvent('i');
     expect(spy1).toHaveBeenCalledTimes(1);
 
-    setup('g    i', spy2);
+    setup('  g i', spy2);
     fireKeydownEvent('g');
     fireKeydownEvent('i');
     expect(spy2).toHaveBeenCalledTimes(1);
+
+    setup('g   i', spy3);
+    fireKeydownEvent('g');
+    fireKeydownEvent('i');
+    expect(spy3).toHaveBeenCalledTimes(1);
+  });
+
+  test('space key should be wrapped in quotation marks', () => {
+    const spy1 = jest.fn();
+    const spy2 = jest.fn();
+    const spy3 = jest.fn();
+
+    setup('" " g  i', spy1);
+    fireKeydownEvent(' ');
+    fireKeydownEvent('g');
+    fireKeydownEvent('i');
+    expect(spy1).toHaveBeenCalledTimes(1);
+
+    setup(`g ' ' i`, spy2); // tslint:disable-line:quotemark
+    fireKeydownEvent('g');
+    fireKeydownEvent(' ');
+    fireKeydownEvent('i');
+    expect(spy2).toHaveBeenCalledTimes(1);
+
+    setup('  g i', spy3);
+    fireKeydownEvent(' ');
+    fireKeydownEvent('g');
+    fireKeydownEvent('i');
+    expect(spy3).toHaveBeenCalledTimes(0);
   });
 
   test('sequences should not fire for sub-sequences', () => {
