@@ -79,6 +79,12 @@ const useHotkeys = (
         return;
       }
 
+      // chrome autocomplete triggers 'keydown' event but event.key will be
+      // undefined. See https://bugs.chromium.org/p/chromium/issues/detail?id=581537
+      if (!Boolean(event.key)) {
+        return;
+      }
+
       // Handle the basic case: a single hotkey
       if (event.key.toLowerCase() === hotkeysArray[0]) {
         callback(event);
