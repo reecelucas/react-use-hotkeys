@@ -15,7 +15,7 @@
     "test:cover": "yarn test --coverage --collectCoverageFrom='src/index.ts'",
     "coveralls": "cat coverage/lcov.info | node node_modules/.bin/coveralls",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "build:cjs": "tsc",
     "build:esm": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:esm",
@@ -74,7 +74,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run format && npm test"
+      "pre-push": "yarn lint && yarn format && yarn test"
     }
   }
 }

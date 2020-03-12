@@ -58,6 +58,12 @@ const useHotkeys = (
     };
 
     const onKeydown = (event: KeyboardEvent) => {
+      // chrome autocomplete triggers 'keydown' event but event.key will be
+      // undefined. See https://bugs.chromium.org/p/chromium/issues/detail?id=581537
+      if (event.key === undefined) {
+        return;
+      }
+
       if (hotkeysArray.length === 1 && hotkeysArray[0] === ESCAPE_HATCH_KEY) {
         /**
          * Provide escape hatch should the user want to perform
