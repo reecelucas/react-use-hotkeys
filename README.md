@@ -44,9 +44,18 @@ useHotkeys('w " " d', () => {
   // space key in sequence (`w ' ' d` also works)
   console.log('some action');
 });
+
+// Multiple key combinations mapped to the same callback
+useHotkeys(['Control+z', 'Meta+z'], () => {
+  console.log('some action');
+});
+
+useHotkeys(['a', 'Meta+z', 'w s d'], () => {
+  console.log('some action');
+});
 ```
 
-The following patterns are **not** supported (yet):
+The following patterns are **not** supported:
 
 ```jsx
 // Modifier keys in sequences
@@ -56,11 +65,6 @@ useHotkeys('Control i d', () => {
 
 // Modifier combinations in sequences
 useHotkeys('Control+z i d', () => {
-  console.log("I won't run!");
-});
-
-// Multiple combinations mapped to the same callback
-useHotkeys(['Control+z', 'Meta+z'], () => {
   console.log("I won't run!");
 });
 ```
@@ -80,7 +84,7 @@ useHotkeys('*', event => {
 ## Call Signature
 
 ```ts
-useHotkeys(hotkeys: string, callback: (event: KeyboardEvent) => void);
+useHotkeys(hotkeys: string | string[], callback: (event: KeyboardEvent) => void);
 ```
 
 ## Tests

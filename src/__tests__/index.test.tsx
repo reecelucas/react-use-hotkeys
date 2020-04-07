@@ -5,7 +5,7 @@ import useHotkeys from '../index';
 import fireKeydownEvent from './helpers/fireKeydownEvent';
 
 interface ComponentProps {
-  hotkeys: string;
+  hotkeys: string | string[];
   callback: jest.Mock<any, [any]>;
 }
 
@@ -37,6 +37,18 @@ describe('useHotkeys: basic', () => {
     expect(spy).toHaveBeenCalledTimes(0);
 
     fireKeydownEvent('z');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test('callback should not be called if event.key is not defined and no modifer key is pressed', () => {
+    const spy = jest.fn();
+
+    setup('*', spy);
+
+    fireKeydownEvent();
+    expect(spy).toHaveBeenCalledTimes(0);
+
+    fireKeydownEvent(undefined, { ctrlKey: true });
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -395,6 +407,80 @@ describe('useHotkeys: key sequences', () => {
 
     jest.runAllTimers();
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('useHotkeys: multiple combinations', () => {
+  test('single keys should work', () => {
+    const spy = jest.fn();
+
+    setup(['g', 'i', 'd'], spy);
+
+    fireKeydownEvent('g');
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    fireKeydownEvent('i');
+    expect(spy).toHaveBeenCalledTimes(2);
+
+    fireKeydownEvent('d');
+    expect(spy).toHaveBeenCalledTimes(3);
+  });
+
+  test('modifier combinations should work', () => {
+    const spy = jest.fn();
+
+    setup(['Control+z', 'Meta+z'], spy);
+
+    fireKeydownEvent('z', { ctrlKey: true });
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    fireKeydownEvent('z', { metaKey: true });
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  test('key sequences should work', () => {
+    jest.useFakeTimers();
+    const spy = jest.fn();
+
+    setup(['g i d', 't i f'], spy);
+
+    fireKeydownEvent('g');
+    fireKeydownEvent('i');
+    fireKeydownEvent('d');
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    setTimeout(() => {
+      // Wait for previous sequence ('g i d') to timeout
+      fireKeydownEvent('t');
+      fireKeydownEvent('i');
+      fireKeydownEvent('f');
+    }, 1000);
+
+    jest.runAllTimers();
+    expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  test('mixed key combinations should work', () => {
+    jest.useFakeTimers();
+    const spy = jest.fn();
+
+    setup(['g i d', 'Control+z', 'a'], spy);
+
+    fireKeydownEvent('z', { ctrlKey: true });
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    fireKeydownEvent('g');
+    fireKeydownEvent('i');
+    fireKeydownEvent('d');
+    expect(spy).toHaveBeenCalledTimes(2);
+
+    setTimeout(() => {
+      // Wait for previous sequence ('g i d') to timeout
+      fireKeydownEvent('a');
+    }, 1000);
+
+    jest.runAllTimers();
+    expect(spy).toHaveBeenCalledTimes(3);
   });
 });
 
