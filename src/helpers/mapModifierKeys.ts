@@ -1,4 +1,4 @@
-interface ModiferKeyMap {
+interface ModifierKeyMap {
   control: string;
   shift: string;
   alt: string;
@@ -6,11 +6,11 @@ interface ModiferKeyMap {
   [key: string]: string;
 }
 
-const modiferKeyMap: ModiferKeyMap = {
+const modifierKeyMap: ModifierKeyMap = {
   control: 'ctrlKey',
   shift: 'shiftKey',
   alt: 'altKey',
   meta: 'metaKey'
 };
 
-export default (keys: string[]) => keys.map(k => modiferKeyMap[k]);
+export default (keys: string[]) => keys.map(k => modifierKeyMap[k]);
