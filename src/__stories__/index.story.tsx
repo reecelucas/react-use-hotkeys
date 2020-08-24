@@ -1,34 +1,41 @@
-import { text, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import useHotkeys from '../index';
-import usePrevious from './utils/hooks/usePrevious';
 
-const Basic = ({ hotkey }: { hotkey: string }) => {
-  const [keyPressed, setKeyPressed] = React.useState(false);
-  const prevHotkey = usePrevious(hotkey);
-
-  React.useEffect(() => {
-    if (hotkey !== prevHotkey) {
-      setKeyPressed(false);
-    }
-  }, [hotkey]);
-
-  useHotkeys(hotkey, event => {
-    event.preventDefault();
-    setKeyPressed(true);
+const Basic: React.FC<{ hotkey: string }> = ({ hotkey }) => {
+  useHotkeys(hotkey, () => {
+    alert(`${hotkey} pressed!`);
   });
 
-  return (
-    <div>
-      <span>Hotkey selected:</span> <strong>{hotkey}</strong>
-      <br />
-      <span>Hotkey pressed: {keyPressed ? 'TRUE' : 'FALSE'}</span>
-    </div>
+  return <div>Press {hotkey}</div>;
+};
+
+const EventCapture = () => {
+  useHotkeys(
+    'Escape',
+    () => {
+      alert('Escape pressed: capturing phase');
+    },
+    true
   );
+
+  return <Basic hotkey={'Escape'} />;
+};
+
+const EscapeHatch = () => {
+  useHotkeys('*', (event: KeyboardEvent) => {
+    alert(`${event.key} pressed!`);
+  });
+
+  return <p>Press any key</p>;
 };
 
 storiesOf('useHotkeys', module)
   .addDecorator(withKnobs)
-  .add('Core API', () => <Basic hotkey={text('Hotkeys', 'Escape')} />)
-  .add('Escape hatch', () => <Basic hotkey={'*'} />);
+  .add('Basic', () => <Basic hotkey={'Escape'} />)
+  .add('Modifier combination', () => <Basic hotkey={'Meta+Shift+z'} />)
+  .add('Key sequences', () => <Basic hotkey={'j o b'} />)
+  .add('Space in sequence', () => <Basic hotkey={'w " " d'} />)
+  .add('Event listener options', () => <EventCapture />)
+  .add('Escape hatch', () => <EscapeHatch />);

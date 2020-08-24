@@ -23,7 +23,8 @@ const ESCAPE_HATCH_KEY = '*';
 
 const useHotkeys = (
   hotkeys: string | string[],
-  callback: (event: KeyboardEvent) => void
+  callback: (event: KeyboardEvent) => void,
+  eventListenerOptions?: boolean | AddEventListenerOptions
 ) => {
   const hotkeysArray: string[][] = useMemo(
     () =>
@@ -116,12 +117,12 @@ const useHotkeys = (
       });
     };
 
-    window.addEventListener('keydown', onKeydown);
+    window.addEventListener('keydown', onKeydown, eventListenerOptions);
 
     return () => {
-      window.removeEventListener('keydown', onKeydown);
+      window.removeEventListener('keydown', onKeydown, eventListenerOptions);
     };
-  }, [hotkeysArray, callback]);
+  }, [hotkeysArray, callback, eventListenerOptions]);
 };
 
 export default useHotkeys;

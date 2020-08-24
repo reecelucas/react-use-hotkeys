@@ -23,36 +23,36 @@ All hotkey combinations must use valid `KeyBoardEvent` `"key"` values. A full li
 ```jsx
 // Single keys
 useHotkeys('Escape', () => {
-  console.log('some action');
+  console.log('Some action');
 });
 
 useHotkeys('F7', () => {
-  console.log('some action');
+  console.log('Some action');
 });
 
 // Modifier combinations
 useHotkeys('Meta+Shift+z', () => {
-  console.log('some action');
+  console.log('Some action');
 });
 
 // Key sequences
 useHotkeys('w s d', () => {
-  console.log('some action');
+  console.log('Some action');
 });
 
 useHotkeys('w " " d', () => {
   // space key in sequence (`w ' ' d` also works)
-  console.log('some action');
+  console.log('Some action');
 });
 
 // Multiple key combinations mapped to the same callback
 useHotkeys(['Control+z', 'Meta+z'], () => {
-  console.log('some action');
+  console.log('Some action');
 });
 
 useHotkeys(['a', 'Meta+z', 'w s d'], () => {
-  console.log('some action');
-});
+  console.log('Some action');
+})
 ```
 
 The following patterns are **not** supported:
@@ -67,6 +67,18 @@ useHotkeys('Control i d', () => {
 useHotkeys('Control+z i d', () => {
   console.log("I won't run!");
 });
+```
+
+You can pass `AddEventListenerOptions` if you need to listen for `keydown` events in the capturing phase:
+
+```jsx
+useHotkeys('Escape', () => {
+  console.log('Some action');
+}, true);
+
+useHotkeys('Escape', () => {
+  console.log('Some action');
+}, { capture: true });
 ```
 
 If you find a use case where the API is too restrictive you can use the escape hatch to perform whatever custom logic you need:
@@ -84,7 +96,11 @@ useHotkeys('*', event => {
 ## Call Signature
 
 ```ts
-useHotkeys(hotkeys: string | string[], callback: (event: KeyboardEvent) => void);
+useHotkeys(
+  hotkeys: string | string[],
+  callback: (event: KeyboardEvent) => void,
+  eventListenerOptions?: boolean | AddEventListenerOptions
+) => void;
 ```
 
 ## Tests
