@@ -218,6 +218,14 @@ describe('useHotkeys: modifier keys', () => {
     fireKeydownEvent('z', { metaKey: true, shiftKey: true });
     expect(spy2).toHaveBeenCalledTimes(1);
   });
+
+  test('modifier combinations support the + key', () => {
+    const spy = jest.fn();
+
+    setup('Shift++', spy);
+    fireKeydownEvent('+', { shiftKey: true });
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('useHotkeys: key sequences', () => {

@@ -7,8 +7,9 @@ export default (hotkeys: string): string[] => {
   }
 
   if (hkeys.includes('+')) {
-    // We're dealing with a modifier-key combination
-    return hkeys.replace(/\s+/g, '').split('+');
+    // We're dealing with a modifier-key combination. The `/(?<!\+)\+/` regex
+    // matches a single `+`, allowing combinations including `+`, E.g. `Shift++`.
+    return hkeys.replace(/\s+/g, '').split(/(?<!\+)\+/);
   }
 
   /**
