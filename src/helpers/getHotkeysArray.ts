@@ -7,9 +7,10 @@ export default (hotkeys: string): string[] => {
   }
 
   if (hkeys.includes('+')) {
-    // We're dealing with a modifier-key combination. The `/(?<!\+)\+/` regex
-    // matches a single `+`, allowing combinations including `+`, E.g. `Shift++`.
-    return hkeys.replace(/\s+/g, '').split(/(?<!\+)\+/);
+    // We're dealing with a modifier-key combination. The `/\b\+/g` regex
+    // matches the first `+` at the end of each word, allowing combinations including `+`,
+    // E.g. `Shift++`. We can't use a negative lookbehind because of lack of support.
+    return hkeys.replace(/\s+/g, '').split(/\b\+/g);
   }
 
   /**
