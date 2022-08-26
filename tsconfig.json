@@ -8,6 +8,7 @@
     "pretty": true,
     "rootDir": "src",
     "strict": true,
+    "allowJs": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "outDir": "lib",

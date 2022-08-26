@@ -8,7 +8,7 @@ import modifierKeyPressed from './helpers/modifierKeyPressed';
 import tail from './helpers/tail';
 import takeUntilLast from './helpers/takeUntilLast';
 
-import 'shim-keyboard-event-key';
+import './vendor/shim-keyboard-event-key';
 
 interface SequenceTimers {
   [key: number]: number;
