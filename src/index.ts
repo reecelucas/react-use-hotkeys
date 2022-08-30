@@ -89,14 +89,14 @@ const useHotkeys = (
       }
 
       hotkeysArray.forEach((keysArray, i) => {
-        // if (keysArray.length === 1 && keysArray[0] === ESCAPE_HATCH_KEY) {
-        //   /**
-        //    * Provide escape hatch should the user want to perform
-        //    * some custom logic not supported by the API.
-        //    */
-        //   callback(event);
-        //   return;
-        // }
+        if (keysArray.length === 1 && keysArray[0] === ESCAPE_HATCH_KEY) {
+          /**
+           * Provide escape hatch should the user want to perform
+           * some custom logic not supported by the API.
+           */
+          callback(event);
+          return;
+        }
 
         // Handle modifier key combos
         if (modifierKeyPressed(event)) {
