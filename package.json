@@ -19,7 +19,8 @@
     "build:cjs": "tsc",
     "build:esm": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:esm",
-    "prepublishOnly": "yarn lint && yarn test && yarn build"
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -59,7 +60,7 @@
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
     "coveralls": "^3.0.3",
-    "husky": "^1.3.1",
+    "husky": "^8.0.1",
     "jest": "^24.7.1",
     "prettier": "^1.16.4",
     "react-testing-library": "^6.0.4",
@@ -67,10 +68,5 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0",
     "typescript": "^4.8.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn lint && yarn format && yarn test"
-    }
   }
 }
