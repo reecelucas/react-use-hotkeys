@@ -12,7 +12,8 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "outDir": "lib",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018", "dom"],
+    "skipLibCheck": true
   },
   "files": [
     "src/index.ts"
