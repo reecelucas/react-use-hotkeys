@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cleanup, render } from "react-testing-library";
+import { render } from "@testing-library/react";
 import useHotkeys from "../index";
 
 import fireKeydownEvent from "./helpers/fireKeydownEvent";
@@ -14,7 +14,7 @@ const setup = (
   callback: ComponentProps["callback"]
 ) => {
   const Component = (props: ComponentProps) => {
-    useHotkeys(props.hotkeys, (event) => {
+    useHotkeys(props.hotkeys, event => {
       props.callback(event);
     });
 
@@ -23,8 +23,6 @@ const setup = (
 
   return render(<Component hotkeys={hotkeys} callback={callback} />);
 };
-
-afterEach(cleanup);
 
 describe("useHotkeys: basic", () => {
   test("callback should be called in response to the keydown event", () => {
