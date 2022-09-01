@@ -1,0 +1,41 @@
+name: Release and Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      # `release-please` automates CHANGELOG generation,
+      # the creation of GitHub releases, and version bumps,
+      # using conventional commits.
+      - name: Release
+        uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: '@reecelucas/react-use-hotkeys'
+
+      # The logic below handles NPM publication. The `if` statements
+      # ensure we only publish when a release PR is merged.
+
+      # Checkout the repository first, otherwise the workflow
+      # won't be able to find the `build-and-test` action.
+      - name: Checkout
+        uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build and Test
+        uses: ./.github/actions/build-and-test
+        if: ${{ steps.release.outputs.release_created }}
+
+      # `--ignore-scripts` secures the `publish` command from malicious packages:
+      # https://snyk.io/blog/github-actions-to-securely-publish-npm-packages/
+      - name: Publish
+        run: npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.release.outputs.release_created }}
