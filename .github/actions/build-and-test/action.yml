@@ -1,5 +1,4 @@
 name: 'Build and Test'
-shell: bash
 description: 'Lint, build and test the package'
 runs:
   using: "composite"
@@ -13,12 +12,16 @@ runs:
 
     - name: Install
       run: yarn install --immutable
+      shell: bash
 
     - name: Lint
       run: yarn lint
+      shell: bash
 
     - name: Build
       run: yarn build
+      shell: bash
 
     - name: Test
       run: yarn test --ci
+      shell: bash
