@@ -1,0 +1,15 @@
+name: Build
+
+on: pull_request
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository first, otherwise the workflow
+      # won't be able to find the `build-and-test` action.
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build and Test
+        uses: ./.github/actions/build-and-test

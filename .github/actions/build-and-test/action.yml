@@ -1,0 +1,27 @@
+name: 'Build and Test'
+description: 'Lint, build and test the package'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'yarn'
+
+    - name: Install
+      run: yarn install --immutable
+      shell: bash
+
+    - name: Lint
+      run: yarn lint
+      shell: bash
+
+    - name: Build
+      run: yarn build
+      shell: bash
+
+    - name: Test
+      run: yarn test --ci
+      shell: bash
