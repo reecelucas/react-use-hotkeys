@@ -6,7 +6,7 @@ import fireKeydownEvent from './helpers/fireKeydownEvent';
 
 interface ComponentProps {
   hotkeys: string | string[];
-  callback: jest.Mock<any, [any]>;
+  callback: jest.Mock<unknown, [unknown]>;
 }
 
 const setup = (
@@ -381,15 +381,13 @@ describe('useHotkeys: key sequences', () => {
   });
 
   test('sequence should timeout', () => {
-    let timer;
-
     jest.useFakeTimers();
     const spy = jest.fn();
 
     setup('g i', spy);
     fireKeydownEvent('g');
 
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       clearTimeout(timer);
       fireKeydownEvent('i');
     }, 1000);
