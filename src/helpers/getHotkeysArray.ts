@@ -6,11 +6,11 @@ export default (hotkeys: string): string[] => {
     return [hkeys];
   }
 
-  if (hkeys.includes('+')) {
+  if (hkeys.includes("+")) {
     // We're dealing with a modifier-key combination. The `/\b\+/g` regex
     // matches the first `+` at the end of each word, allowing combinations including `+`,
     // E.g. `Shift++`. We can't use a negative lookbehind because of lack of support.
-    return hkeys.replace(/\s+/g, '').split(/\b\+/g);
+    return hkeys.replace(/\s+/g, "").split(/\b\+/g);
   }
 
   /**
@@ -18,7 +18,7 @@ export default (hotkeys: string): string[] => {
    * If the whitespace character is within quotation marks (" " or ' ')
    * it signifies a space key and not a delimeter.
    */
-  return [...(hkeys.match(/[^\s"']+|"([^"]*)"|'([^']*)'/g) || [])].map(key =>
-    key.replace(/("|').*?("|')/, ' ')
+  return [...(hkeys.match(/[^\s"']+|"([^"]*)"|'([^']*)'/g) || [])].map((key) =>
+    key.replace(/("|').*?("|')/, " ")
   );
 };

@@ -1,14 +1,14 @@
-import { useEffect, useMemo } from 'react';
-import arraysAreEqual from './helpers/arraysAreEqual';
-import getActiveModifierKeys from './helpers/getActiveModifierKeys';
-import getHotkeysArray from './helpers/getHotkeysArray';
-import isSameSet from './helpers/isSameSet';
-import mapModifierKeys from './helpers/mapModifierKeys';
-import modifierKeyPressed from './helpers/modifierKeyPressed';
-import tail from './helpers/tail';
-import takeUntilLast from './helpers/takeUntilLast';
+import { useEffect, useMemo } from "react";
+import arraysAreEqual from "./helpers/arraysAreEqual";
+import getActiveModifierKeys from "./helpers/getActiveModifierKeys";
+import getHotkeysArray from "./helpers/getHotkeysArray";
+import isSameSet from "./helpers/isSameSet";
+import mapModifierKeys from "./helpers/mapModifierKeys";
+import modifierKeyPressed from "./helpers/modifierKeyPressed";
+import tail from "./helpers/tail";
+import takeUntilLast from "./helpers/takeUntilLast";
 
-import './vendor/shim-keyboard-event-key';
+import "./vendor/shim-keyboard-event-key";
 
 interface SequenceTimers {
   [key: number]: number;
@@ -19,7 +19,7 @@ interface KeySequences {
 }
 
 const KEY_SEQUENCE_TIMEOUT = 1000;
-const ESCAPE_HATCH_KEY = '*';
+const ESCAPE_HATCH_KEY = "*";
 
 const useHotkeys = (
   hotkeys: string | string[],
@@ -117,10 +117,10 @@ const useHotkeys = (
       });
     };
 
-    window.addEventListener('keydown', onKeydown, eventListenerOptions);
+    window.addEventListener("keydown", onKeydown, eventListenerOptions);
 
     return () => {
-      window.removeEventListener('keydown', onKeydown, eventListenerOptions);
+      window.removeEventListener("keydown", onKeydown, eventListenerOptions);
     };
   }, [hotkeysArray, callback, eventListenerOptions]);
 };

@@ -7,10 +7,10 @@ interface ModifierKeyMap {
 }
 
 const modifierKeyMap: ModifierKeyMap = {
-  control: 'ctrlKey',
-  shift: 'shiftKey',
-  alt: 'altKey',
-  meta: 'metaKey'
+  control: "ctrlKey",
+  shift: "shiftKey",
+  alt: "altKey",
+  meta: "metaKey",
 };
 
-export default (keys: string[]) => keys.map(k => modifierKeyMap[k]);
+export default (keys: string[]) => keys.map((k) => modifierKeyMap[k]);
