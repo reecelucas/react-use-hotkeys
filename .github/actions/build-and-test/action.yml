@@ -1,4 +1,5 @@
 name: 'Build and Test'
+shell: bash
 description: 'Lint, build and test the package'
 runs:
   using: "composite"
