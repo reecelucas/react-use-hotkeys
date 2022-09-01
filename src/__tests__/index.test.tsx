@@ -14,7 +14,7 @@ const setup = (
   callback: ComponentProps["callback"]
 ) => {
   const Component = (props: ComponentProps) => {
-    useHotkeys(props.hotkeys, event => {
+    useHotkeys(props.hotkeys, (event) => {
       props.callback(event);
     });
 
