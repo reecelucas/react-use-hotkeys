@@ -1,1 +1,1 @@
-export default (arr: any[]) => arr.slice(0, -1);
+export default (arr: string[]) => arr.slice(0, -1);
