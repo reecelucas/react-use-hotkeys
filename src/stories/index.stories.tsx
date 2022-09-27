@@ -1,29 +1,20 @@
 import React from "react";
 
-import useHotkeys from "../";
+import useHotkeys from "..";
 
 interface ComponentProps {
   hotkey: string;
-  useEventCapture: boolean;
   callback?: (event: KeyboardEvent) => void;
 }
 
-const Component: React.FC<ComponentProps> = ({
-  hotkey,
-  useEventCapture = false,
-  callback,
-}) => {
-  useHotkeys(
-    hotkey,
-    (event) => {
-      if (typeof callback === "function") {
-        callback(event);
-      } else {
-        alert(`${hotkey} pressed!`);
-      }
-    },
-    useEventCapture
-  );
+const Component: React.FC<ComponentProps> = ({ hotkey, callback }) => {
+  useHotkeys(hotkey, (event) => {
+    if (typeof callback === "function") {
+      callback(event);
+    } else {
+      alert(`${hotkey} pressed!`);
+    }
+  });
 
   return <div>Press {hotkey}</div>;
 };
@@ -35,10 +26,10 @@ export default {
 
 const Template = (args) => <Component {...args} />;
 
-export const Basic = Template.bind({});
+export const SingleHotkey = Template.bind({});
 
-Basic.args = {
-  label: "Basic",
+SingleHotkey.args = {
+  label: "Single hotkey",
   hotkey: "Escape",
 };
 
@@ -61,17 +52,6 @@ export const SpaceInSequence = Template.bind({});
 SpaceInSequence.args = {
   label: "Space in Sequence",
   hotkey: 'a " " c',
-};
-
-export const UseCapture = Template.bind({});
-
-UseCapture.args = {
-  label: "Event Listener Options",
-  hotkey: "Enter",
-  useEventCapture: true,
-  callback: (event) => {
-    alert(`${event.key} pressed: capturing phase`);
-  },
 };
 
 export const EscapeHatch = Template.bind({});

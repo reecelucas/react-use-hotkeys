@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render } from "@testing-library/react";
+import { screen, render, fireEvent } from "@testing-library/react";
 import useHotkeys from "../index";
 
 import fireKeydownEvent from "./helpers/fireKeydownEvent";
@@ -7,21 +7,34 @@ import fireKeydownEvent from "./helpers/fireKeydownEvent";
 interface ComponentProps {
   hotkeys: string | string[];
   callback: jest.Mock<unknown, [unknown]>;
+  options?: Record<string, unknown>;
 }
+
+const Component = (props: ComponentProps) => {
+  useHotkeys(
+    props.hotkeys,
+    (event) => {
+      props.callback(event);
+    },
+    props.options
+  );
+
+  return (
+    <>
+      <input type="text" data-testid="INPUT" />
+      <textarea data-testid="TEXTAREA"></textarea>
+    </>
+  );
+};
 
 const setup = (
   hotkeys: ComponentProps["hotkeys"],
-  callback: ComponentProps["callback"]
+  callback: ComponentProps["callback"],
+  options?: ComponentProps["options"]
 ) => {
-  const Component = (props: ComponentProps) => {
-    useHotkeys(props.hotkeys, (event) => {
-      props.callback(event);
-    });
-
-    return null;
-  };
-
-  return render(<Component hotkeys={hotkeys} callback={callback} />);
+  return render(
+    <Component hotkeys={hotkeys} callback={callback} options={options} />
+  );
 };
 
 describe("useHotkeys: basic", () => {
@@ -499,5 +512,79 @@ describe("useHotkeys: escape hatch", () => {
     fireKeydownEvent("", { ctrlKey: true });
     fireKeydownEvent("z", { metaKey: true });
     expect(spy).toHaveBeenCalledTimes(5);
+  });
+});
+
+/**
+ * Note: `enableOnContentEditable` is not possible to test in JSDOM
+ * since it lacks support for the `contenteditable` attribute.
+ */
+describe("useHotkeys: options", () => {
+  describe("enabled", () => {
+    test("callback should not be called when enabled is false", () => {
+      const spy = jest.fn();
+
+      setup("z", spy, { enabled: false });
+      expect(spy).toHaveBeenCalledTimes(0);
+
+      fireKeydownEvent("z");
+      expect(spy).toHaveBeenCalledTimes(0);
+    });
+
+    test("callback should be called when enabled is true", () => {
+      const spy = jest.fn();
+
+      setup("z", spy, { enabled: true });
+      expect(spy).toHaveBeenCalledTimes(0);
+
+      fireKeydownEvent("z");
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test("callback should be called when enabled is not defined", () => {
+      const spy = jest.fn();
+
+      setup("z", spy);
+      expect(spy).toHaveBeenCalledTimes(0);
+
+      fireKeydownEvent("z");
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("ignoredElementWhitelist", () => {
+    test.each(["INPUT", "TEXTAREA"])(
+      "callback should not be called when keydown event originates from %s element",
+      (nodeName) => {
+        const spy = jest.fn();
+
+        setup("z", spy);
+        expect(spy).toHaveBeenCalledTimes(0);
+
+        fireEvent.keyDown(screen.getByTestId(nodeName), { key: "z" });
+        expect(spy).toHaveBeenCalledTimes(0);
+
+        // Should be called when the event does not originate from a restricted element
+        fireKeydownEvent("z");
+        expect(spy).toHaveBeenCalledTimes(1);
+      }
+    );
+
+    test.each(["INPUT", "TEXTAREA"])(
+      "callback should be called when keydown event originates from %s element if it's specified in the ignoredElementWhitelist",
+      (nodeName) => {
+        const spy = jest.fn();
+
+        setup("z", spy, { ignoredElementWhitelist: [nodeName] });
+        expect(spy).toHaveBeenCalledTimes(0);
+
+        fireEvent.keyDown(screen.getByTestId(nodeName), { key: "z" });
+        expect(spy).toHaveBeenCalledTimes(1);
+
+        // Should also be called when event does not originate from a restricted element
+        fireKeydownEvent("z");
+        expect(spy).toHaveBeenCalledTimes(2);
+      }
+    );
   });
 });

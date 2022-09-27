@@ -7,6 +7,8 @@ import mapModifierKeys from "./helpers/mapModifierKeys";
 import modifierKeyPressed from "./helpers/modifierKeyPressed";
 import tail from "./helpers/tail";
 import takeUntilLast from "./helpers/takeUntilLast";
+import ignoreKeydownEvent from "./helpers/ignoreKeydownEvent";
+import type { ElementsToIgnore } from "./helpers/ignoreKeydownEvent";
 
 import "./vendor/shim-keyboard-event-key";
 
@@ -18,13 +20,20 @@ interface KeySequences {
   [key: number]: string[];
 }
 
+interface Options {
+  enabled?: boolean;
+  enableOnContentEditable?: boolean;
+  ignoredElementWhitelist?: ElementsToIgnore[];
+  eventListenerOptions?: AddEventListenerOptions;
+}
+
 const KEY_SEQUENCE_TIMEOUT = 1000;
 const ESCAPE_HATCH_KEY = "*";
 
 const useHotkeys = (
   hotkeys: string | string[],
   callback: (event: KeyboardEvent) => void,
-  eventListenerOptions?: boolean | AddEventListenerOptions
+  options?: Options
 ) => {
   const hotkeysArray: string[][] = useMemo(
     () =>
@@ -37,6 +46,13 @@ const useHotkeys = (
   useEffect(() => {
     const keySequences: KeySequences = {};
     const sequenceTimers: SequenceTimers = {};
+
+    const {
+      enabled,
+      enableOnContentEditable,
+      ignoredElementWhitelist,
+      eventListenerOptions,
+    } = options || {};
 
     const clearSequenceTimer = (index: number) => {
       clearTimeout(sequenceTimers[index]);
@@ -80,11 +96,13 @@ const useHotkeys = (
     };
 
     const onKeydown = (event: KeyboardEvent) => {
-      /**
-       * Chrome autocomplete triggers `keydown` event but event.key will be undefined.
-       * See https://bugs.chromium.org/p/chromium/issues/detail?id=581537.
-       */
-      if (!event.key && !modifierKeyPressed(event)) {
+      if (
+        ignoreKeydownEvent(
+          event,
+          enableOnContentEditable,
+          ignoredElementWhitelist
+        )
+      ) {
         return;
       }
 
@@ -117,12 +135,21 @@ const useHotkeys = (
       });
     };
 
-    window.addEventListener("keydown", onKeydown, eventListenerOptions);
+    if (enabled !== false) {
+      window.addEventListener("keydown", onKeydown, eventListenerOptions);
+    }
 
     return () => {
       window.removeEventListener("keydown", onKeydown, eventListenerOptions);
     };
-  }, [hotkeysArray, callback, eventListenerOptions]);
+  }, [
+    hotkeysArray,
+    callback,
+    options?.enabled,
+    options?.enableOnContentEditable,
+    options?.ignoredElementWhitelist,
+    options?.eventListenerOptions,
+  ]);
 };
 
 export default useHotkeys;
